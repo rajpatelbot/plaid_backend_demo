@@ -27,10 +27,10 @@ export const env = {
       "PLAID_ENV",
       "PLAID_PRODUCTS",
       "PLAID_COUNTRY_CODES",
-      "USER",
-      "PASSWORD",
-      "HOST",
-      "DATABASE",
+      // "USER",
+      // "PASSWORD",
+      // "HOST",
+      // "DATABASE",
     ];
 
     for (const variable of required) {

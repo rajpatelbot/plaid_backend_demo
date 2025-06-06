@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createLinkToken, exchangePublicToken, getTransactions } from '@/controllers/plaid';
+import { createLinkToken, exchangePublicToken, getTransactions } from '../controllers/plaid';
 
 const plaidRouter = Router();
 

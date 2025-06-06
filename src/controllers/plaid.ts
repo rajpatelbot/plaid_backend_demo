@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Configuration, CountryCode, PlaidApi, PlaidEnvironments, Products } from "plaid";
-import { env } from "@/config/env";
+import { env } from "../config/env";
 
 const configuration = new Configuration({
   basePath: PlaidEnvironments[env.PLAID_ENV!],
