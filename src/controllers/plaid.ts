@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Configuration, CountryCode, PlaidApi, PlaidEnvironments, Products } from "plaid";
+import { Configuration, CountryCode, Institution, PlaidApi, PlaidEnvironments, Products } from "plaid";
 import { env } from "../config/env";
 
 const configuration = new Configuration({
@@ -55,9 +55,28 @@ export const exchangePublicToken = async (req: Request, res: Response) => {
       access_token: accessToken,
     });
 
+    const institutionItem = await plaidClient.itemGet({
+      access_token: accessToken,
+    });
+
+    const institutionId = institutionItem.data.item.institution_id;
+
+    let institution: Partial<Institution> | null = null;
+    if (institutionId) {
+      const institutionResponse = await plaidClient.institutionsGetById({
+        institution_id: institutionId,
+        country_codes: env.PLAID_COUNTRY_CODES!.split(",") as CountryCode[],
+      });
+      institution = {
+        institution_id: institutionResponse.data.institution.institution_id,
+        name: institutionResponse.data.institution.name,
+      };
+    }
+
     const accountData = {
       access_token: accessToken,
       item_id: response.data.item_id,
+      institution,
       accounts: accountResponse.data.accounts,
     }
 
